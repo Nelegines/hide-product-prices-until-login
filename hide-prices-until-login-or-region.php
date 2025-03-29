@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce Hide Prices Until Login or Region (by Nelegines)
  * Plugin URI: https://nelegines.com/plugins/hide-prices-until-login
  * Description: Hides WooCommerce product prices and disables purchasing unless the user is logged in or from an allowed region.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Nelegines
  * Author URI: https://nelegines.com
  * Text Domain: nelegines-hide-prices
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) exit; // Prevent direct access
 // Define constants
 define('HPULR_PLUGIN_PATH', plugin_dir_path(__FILE__)); // Filesystem path
 define('HPULR_PLUGIN_URL', plugin_dir_url(__FILE__));   // URL path
-define('HPULR_VERSION', '1.0.0');
+define('HPULR_VERSION', '1.1.0');
 
 // Autoloader for class files in includes/
 spl_autoload_register(function ($class) {

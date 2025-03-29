@@ -1,0 +1,16 @@
+.price-hidden-msg {
+    display: inline-block;
+    font-weight: 600;
+    color: #b91c1c; /* red-700 */
+    background-color: #fef2f2; /* red-100 */
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.4;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.price-hidden-msg:hover {
+    background-color: #fee2e2; /* slightly darker */
+    color: #991b1b;
+}
