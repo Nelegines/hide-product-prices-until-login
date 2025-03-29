@@ -1,0 +1,96 @@
+# Copyright (C) 2025 Nelegines
+# This file is distributed under the same license as the WooCommerce Hide Prices Until Login or Region (by Nelegines) plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Hide Prices Until Login or Region (by Nelegines) 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hide-prices-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-03-29T15:31:22+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: hide-prices-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: hide-prices-until-login-or-region.php
+msgid "WooCommerce Hide Prices Until Login or Region (by Nelegines)"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: hide-prices-until-login-or-region.php
+msgid "https://nelegines.com/plugins/hide-prices-until-login"
+msgstr ""
+
+#. Description of the plugin
+#: hide-prices-until-login-or-region.php
+msgid "Hides WooCommerce product prices and disables purchasing unless the user is logged in or from an allowed region."
+msgstr ""
+
+#. Author of the plugin
+#: hide-prices-until-login-or-region.php
+msgid "Nelegines"
+msgstr ""
+
+#. Author URI of the plugin
+#: hide-prices-until-login-or-region.php
+msgid "https://nelegines.com"
+msgstr ""
+
+#: admin/class-settings.php:18
+msgid "Hide Price Message (Optional)"
+msgstr ""
+
+#: admin/class-settings.php:50
+msgid "Hide Prices"
+msgstr ""
+
+#: admin/class-settings.php:65
+msgid "Hide Prices Settings"
+msgstr ""
+
+#: admin/class-settings.php:67
+msgid "Configure rules for hiding prices and disabling Add to Cart."
+msgstr ""
+
+#: admin/class-settings.php:71
+msgid "Allowed Countries"
+msgstr ""
+
+#: admin/class-settings.php:72
+msgid "Comma-separated ISO country codes (e.g., US,CA,AU)"
+msgstr ""
+
+#: admin/class-settings.php:79
+msgid "Hidden Price Message"
+msgstr ""
+
+#: admin/class-settings.php:80
+msgid "Shown when prices are hidden. Supports {login_url}"
+msgstr ""
+
+#: admin/class-settings.php:87
+msgid "Enable Test Mode"
+msgstr ""
+
+#: admin/class-settings.php:88
+msgid "Force-hide prices even for logged-in admins (for testing)."
+msgstr ""
+
+#: admin/class-settings.php:113
+msgid "Supports"
+msgstr ""
+
+#: admin/class-settings.php:113
+msgid "placeholder."
+msgstr ""
+
+#: includes/class-price-handler.php:35
+msgid "Login here"
+msgstr ""
+
+#: includes/class-price-handler.php:38
+msgid "Login"
+msgstr ""

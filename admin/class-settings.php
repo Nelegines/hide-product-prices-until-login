@@ -15,7 +15,7 @@ class HPULR_Settings {
         add_action('add_meta_boxes', function () {
             add_meta_box(
                 'hpulr_product_message',
-                __('Hide Price Message (Optional)', 'nelegines-hide-prices'),
+                __('Hide Price Message (Optional)', 'hide-prices-for-woocommerce'),
                 [self::class, 'render_product_message_box'],
                 'product',
                 'side'
@@ -27,7 +27,7 @@ class HPULR_Settings {
             /**
              * Verify the nonce and save the field securely.
              */
-            if (!isset($_POST['hpulr_nonce']) || !wp_verify_nonce($_POST['hpulr_nonce'], 'hpulr_save_product_message')) {
+            if (!isset($_POST['hpulr_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['hpulr_nonce'])), 'hpulr_save_product_message')) {
                 return;
             }
 
@@ -35,7 +35,7 @@ class HPULR_Settings {
             if (!current_user_can('edit_post', $post_id)) return;
 
             if (isset($_POST['hpulr_custom_message'])) {
-                update_post_meta($post_id, '_hpulr_custom_message', sanitize_text_field($_POST['hpulr_custom_message']));
+                update_post_meta($post_id, '_hpulr_custom_message', sanitize_text_field(wp_unslash($_POST['hpulr_custom_message'])));
             }
         });
     }
@@ -47,7 +47,7 @@ class HPULR_Settings {
      * @return array
      */
     public static function add_settings_section($sections) {
-        $sections['hpulr_hide_prices'] = __('Hide Prices', 'nelegines-hide-prices');
+        $sections['hpulr_hide_prices'] = __('Hide Prices', 'hide-prices-for-woocommerce');
         return $sections;
     }
 
@@ -62,30 +62,30 @@ class HPULR_Settings {
         if ($current_section === 'hpulr_hide_prices') {
             return [
                 [
-                    'title' => __('Hide Prices Settings', 'nelegines-hide-prices'),
+                    'title' => __('Hide Prices Settings', 'hide-prices-for-woocommerce'),
                     'type'  => 'title',
-                    'desc'  => __('Configure rules for hiding prices and disabling Add to Cart.', 'nelegines-hide-prices'),
+                    'desc'  => __('Configure rules for hiding prices and disabling Add to Cart.', 'hide-prices-for-woocommerce'),
                     'id'    => 'hpulr_hide_prices_title',
                 ],
                 [
-                    'title'    => __('Allowed Countries', 'nelegines-hide-prices'),
-                    'desc'     => __('Comma-separated ISO country codes (e.g., US,CA,AU)', 'nelegines-hide-prices'),
+                    'title'    => __('Allowed Countries', 'hide-prices-for-woocommerce'),
+                    'desc'     => __('Comma-separated ISO country codes (e.g., US,CA,AU)', 'hide-prices-for-woocommerce'),
                     'id'       => 'hpulr_allowed_countries',
                     'default'  => '',
                     'type'     => 'text',
                     'desc_tip' => true,
                 ],
                 [
-                    'title'    => __('Hidden Price Message', 'nelegines-hide-prices'),
-                    'desc'     => __('Shown when prices are hidden. Supports {login_url}', 'nelegines-hide-prices'),
+                    'title'    => __('Hidden Price Message', 'hide-prices-for-woocommerce'),
+                    'desc'     => __('Shown when prices are hidden. Supports {login_url}', 'hide-prices-for-woocommerce'),
                     'id'       => 'hpulr_hidden_price_message',
                     'default'  => 'Login to view price',
                     'type'     => 'text',
                     'desc_tip' => true,
                 ],
                 [
-                    'title'    => __('Enable Test Mode', 'nelegines-hide-prices'),
-                    'desc'     => __('Force-hide prices even for logged-in admins (for testing).', 'nelegines-hide-prices'),
+                    'title'    => __('Enable Test Mode', 'hide-prices-for-woocommerce'),
+                    'desc'     => __('Force-hide prices even for logged-in admins (for testing).', 'hide-prices-for-woocommerce'),
                     'id'       => 'hpulr_test_mode',
                     'default'  => 'no',
                     'type'     => 'checkbox',
@@ -110,7 +110,7 @@ class HPULR_Settings {
         wp_nonce_field('hpulr_save_product_message', 'hpulr_nonce');
         ?>
         <textarea name="hpulr_custom_message" rows="4" style="width:100%;"><?php echo esc_textarea($value); ?></textarea>
-        <p class="description"><?php esc_html_e('Supports', 'nelegines-hide-prices'); ?> <code>{login_url}</code> <?php esc_html_e('placeholder.', 'nelegines-hide-prices'); ?></p>
+        <p class="description"><?php esc_html_e('Supports', 'hide-prices-for-woocommerce'); ?> <code>{login_url}</code> <?php esc_html_e('placeholder.', 'hide-prices-for-woocommerce'); ?></p>
         <?php
     }
 }

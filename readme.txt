@@ -1,8 +1,8 @@
-=== WooCommerce Hide Prices Until Login or Region (by Nelegines) ===
+=== Hide Prices for WooCommerce ===
 Contributors: nelegines
 Tags: woocommerce, hide prices, geolocation, login required, user roles
 Requires at least: 5.8
-Tested up to: 6.5
+Tested up to: 6.7
 Requires PHP: 7.4
 Stable tag: 1.1.0
 License: GPLv2 or later
