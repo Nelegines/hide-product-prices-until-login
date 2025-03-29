@@ -32,10 +32,10 @@ class HPULR_Price_Handler {
 
             // Replace {login_url} with full anchor
             if (strpos($raw_message, '{login_url}') !== false) {
-                $login_link = '<a href="' . esc_url($login_url) . '">' . __('Login here', 'hide-prices-for-woocommerce') . '</a>';
+                $login_link = '<a href="' . esc_url($login_url) . '">' . __('Login here', 'hide-product-prices-until-login') . '</a>';
                 $message = str_replace('{login_url}', $login_link, $raw_message);
             } else {
-                $message = $raw_message . ' <a href="' . esc_url($login_url) . '">' . __('Login', 'hide-prices-for-woocommerce') . '</a>';
+                $message = $raw_message . ' <a href="' . esc_url($login_url) . '">' . __('Login', 'hide-product-prices-until-login') . '</a>';
             }
 
             return '<span class="price-hidden-msg">' . wp_kses_post($message) . '</span>';

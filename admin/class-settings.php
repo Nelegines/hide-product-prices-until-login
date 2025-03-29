@@ -15,7 +15,7 @@ class HPULR_Settings {
         add_action('add_meta_boxes', function () {
             add_meta_box(
                 'hpulr_product_message',
-                __('Hide Price Message (Optional)', 'hide-prices-for-woocommerce'),
+                __('Hide Price Message (Optional)', 'hide-product-prices-until-login'),
                 [self::class, 'render_product_message_box'],
                 'product',
                 'side'
@@ -47,7 +47,7 @@ class HPULR_Settings {
      * @return array
      */
     public static function add_settings_section($sections) {
-        $sections['hpulr_hide_prices'] = __('Hide Prices', 'hide-prices-for-woocommerce');
+        $sections['hpulr_hide_prices'] = __('Hide Prices', 'hide-product-prices-until-login');
         return $sections;
     }
 
@@ -62,30 +62,30 @@ class HPULR_Settings {
         if ($current_section === 'hpulr_hide_prices') {
             return [
                 [
-                    'title' => __('Hide Prices Settings', 'hide-prices-for-woocommerce'),
+                    'title' => __('Hide Prices Settings', 'hide-product-prices-until-login'),
                     'type'  => 'title',
-                    'desc'  => __('Configure rules for hiding prices and disabling Add to Cart.', 'hide-prices-for-woocommerce'),
+                    'desc'  => __('Configure rules for hiding prices and disabling Add to Cart.', 'hide-product-prices-until-login'),
                     'id'    => 'hpulr_hide_prices_title',
                 ],
                 [
-                    'title'    => __('Allowed Countries', 'hide-prices-for-woocommerce'),
-                    'desc'     => __('Comma-separated ISO country codes (e.g., US,CA,AU)', 'hide-prices-for-woocommerce'),
+                    'title'    => __('Allowed Countries', 'hide-product-prices-until-login'),
+                    'desc'     => __('Comma-separated ISO country codes (e.g., US,CA,AU)', 'hide-product-prices-until-login'),
                     'id'       => 'hpulr_allowed_countries',
                     'default'  => '',
                     'type'     => 'text',
                     'desc_tip' => true,
                 ],
                 [
-                    'title'    => __('Hidden Price Message', 'hide-prices-for-woocommerce'),
-                    'desc'     => __('Shown when prices are hidden. Supports {login_url}', 'hide-prices-for-woocommerce'),
+                    'title'    => __('Hidden Price Message', 'hide-product-prices-until-login'),
+                    'desc'     => __('Shown when prices are hidden. Supports {login_url}', 'hide-product-prices-until-login'),
                     'id'       => 'hpulr_hidden_price_message',
                     'default'  => 'Login to view price',
                     'type'     => 'text',
                     'desc_tip' => true,
                 ],
                 [
-                    'title'    => __('Enable Test Mode', 'hide-prices-for-woocommerce'),
-                    'desc'     => __('Force-hide prices even for logged-in admins (for testing).', 'hide-prices-for-woocommerce'),
+                    'title'    => __('Enable Test Mode', 'hide-product-prices-until-login'),
+                    'desc'     => __('Force-hide prices even for logged-in admins (for testing).', 'hide-product-prices-until-login'),
                     'id'       => 'hpulr_test_mode',
                     'default'  => 'no',
                     'type'     => 'checkbox',
@@ -110,7 +110,7 @@ class HPULR_Settings {
         wp_nonce_field('hpulr_save_product_message', 'hpulr_nonce');
         ?>
         <textarea name="hpulr_custom_message" rows="4" style="width:100%;"><?php echo esc_textarea($value); ?></textarea>
-        <p class="description"><?php esc_html_e('Supports', 'hide-prices-for-woocommerce'); ?> <code>{login_url}</code> <?php esc_html_e('placeholder.', 'hide-prices-for-woocommerce'); ?></p>
+        <p class="description"><?php esc_html_e('Supports', 'hide-product-prices-until-login'); ?> <code>{login_url}</code> <?php esc_html_e('placeholder.', 'hide-product-prices-until-login'); ?></p>
         <?php
     }
 }

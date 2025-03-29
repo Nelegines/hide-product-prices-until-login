@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Hide Prices for WooCommerce
+ * Plugin Name: Hide Product Prices Until Login – for WooCommerce
  * Plugin URI: https://nelegines.com/plugins/hide-prices
  * Description: A plugin by Nelegines to hide WooCommerce product prices and disables purchasing unless the user is
  * logged in or from an allowed region.
@@ -9,7 +9,7 @@
  * Author URI: https://nelegines.com
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: hide-prices-for-woocommerce
+ * Text Domain: hide-product-prices-until-login
  * Domain Path: /languages
  */
 

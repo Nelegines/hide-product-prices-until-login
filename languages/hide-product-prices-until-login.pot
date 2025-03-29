@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Hide Prices Until Login or Region (by Nelegines) 1.1.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hide-prices-for-woocommerce\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hide-product-prices-until-login\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "POT-Creation-Date: 2025-03-29T15:31:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: hide-prices-for-woocommerce\n"
+"X-Domain: hide-product-prices-until-login\n"
 
 #. Plugin Name of the plugin
 #: hide-prices-until-login-or-region.php
