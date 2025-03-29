@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/hide-prices-until-login-or-region.iml" filepath="$PROJECT_DIR$/.idea/hide-prices-until-login-or-region.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hide-product-prices-until-login.iml" filepath="$PROJECT_DIR$/.idea/hide-product-prices-until-login.iml" />
     </modules>
   </component>
 </project>
