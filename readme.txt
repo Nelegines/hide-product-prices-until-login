@@ -4,11 +4,11 @@ Tags: woocommerce, hide prices, geolocation, login required, user roles
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Hide product prices and disable purchases unless the user is logged in or from an allowed region. Perfect for wholesale or restricted shops.
+Hide WooCommerce product prices and Add to Cart buttons unless customers are logged in or from allowed countries or roles. Ideal for wholesale stores and private shops.
 
 == Description ==
 
@@ -18,6 +18,7 @@ Hide product prices and disable purchases unless the user is logged in or from a
 - Hide prices for non-logged-in users
 - Disable Add to Cart for guests
 - Geolocation-based visibility (by allowed countries)
+- User role-based visibility (NEW in 1.2.0)
 - Custom message with `{login_url}` support
 - Redirects users back to the product after login
 - Integrated directly into WooCommerce settings
@@ -53,6 +54,12 @@ Yes. Enable “Test Mode” in the plugin settings to preview hidden prices whil
 
 == Changelog ==
 
+= 1.2.0 =
+- ✅ NEW: Hide prices based on user roles
+- ✅ NEW: Dynamic UI to manage restricted roles in admin
+- ✅ FIX: Ensures restricted roles are saved as an array
+- ✅ Tweak: Minor styling and JS enhancements for settings UI
+
 = 1.1.0 =
 - ✅ NEW: Per-product custom message override
 - ✅ NEW: Hide Add to Cart button in product loops
@@ -65,6 +72,9 @@ Yes. Enable “Test Mode” in the plugin settings to preview hidden prices whil
 - Initial release with price hiding and region-based logic
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Added support for user role-based restrictions and improved admin settings UX.
 
 = 1.1.0 =
 Adds per-product messages, Add to Cart hiding, and admin test mode. Recommended upgrade for full WooCommerce compatibility and control.
