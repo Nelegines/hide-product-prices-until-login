@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const table = document.getElementById('restricted-roles-table')?.querySelector('tbody');
     const hiddenInput = document.getElementById('hpulr_restricted_roles');
     const addButton = document.getElementById('add-role-btn');
+    const hpulr_no_data_text = window.hpulr_i18n?.no_data || 'No roles selected yet.';
+
 
     if (!select || !table || !hiddenInput || !addButton) return;
 
@@ -17,17 +19,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!role) return;
 
+        jQuery('#restricted-roles-table tr.no-data-available').remove();
+
         const row = document.createElement('tr');
         row.setAttribute('data-role', role);
         row.innerHTML = `
             <td>${text}</td>
-            <td><button type="button" class="button remove-role-btn">Remove</button></td>
+            <td class="action"><button type="button" class="button remove-role-btn">Remove</button></td>
         `;
 
         table.appendChild(row);
         select.querySelector(`option[value="${role}"]`)?.remove();
 
         updateHiddenInput();
+        updateEmptyStateRow();
     });
 
     // Remove role from table
@@ -47,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         row.remove();
         updateHiddenInput();
+        updateEmptyStateRow();
     });
 
     /**
@@ -55,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateHiddenInput() {
         const roles = jQuery('#restricted-roles-table tr').map(function () {
             return jQuery(this).data('role');
-        }).get();
+        }).get().filter(role => role && role.trim() !== '');
 
         const $hiddenInput = jQuery('#hpulr_restricted_roles');
         $hiddenInput.val(roles.join(',')).trigger('change');
@@ -82,6 +88,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if ($insertAfter.length) {
                 $insertAfter.after($notice);
             }
+        }
+    }
+
+    function updateEmptyStateRow() {
+        const $tbody = jQuery('#restricted-roles-table tbody');
+
+        // Always remove existing no-data row
+        $tbody.find('tr.no-available-data').remove();
+
+        // If no rows left (no real data rows), add placeholder
+        const hasDataRows = $tbody.find('tr').filter(function () {
+            return !jQuery(this).hasClass('no-available-data');
+        }).length > 0;
+
+        if (!hasDataRows) {
+            $tbody.append(`
+            <tr class="no-available-data">
+                <td colspan="2" style="text-align: center;">${hpulr_no_data_text}</td>
+            </tr>
+        `);
         }
     }
 });

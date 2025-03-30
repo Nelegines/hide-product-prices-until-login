@@ -153,15 +153,8 @@ class HPULR_Settings
     {
         $value = get_post_meta($post->ID, '_hpulr_custom_message', true);
         wp_nonce_field('hpulr_save_product_message', 'hpulr_nonce');
-        ?>
-        <textarea name="hpulr_custom_message" rows="4"
-                  style="width:100%;"><?php
-            echo esc_textarea($value); ?></textarea>
-        <p class="description"><?php
-            esc_html_e('Supports', 'hide-product-prices-until-login'); ?>
-            <code>{login_url}</code> <?php
-            esc_html_e('placeholder.', 'hide-product-prices-until-login'); ?></p>
-        <?php
+
+        require_once HPULR_PLUGIN_PATH . 'templates/product-edit-message-box-template.php';
     }
 
     /**
@@ -173,43 +166,8 @@ class HPULR_Settings
         $all_roles      = HPULR_Settings::get_all_roles();
         $stored         = get_option('hpulr_restricted_roles', []);
         $selected_roles = is_array($stored) ? $stored : [];
-        ?>
-        <div class="hpulr-roles-table-wrapper">
-            <table class="widefat striped" id="restricted-roles-table">
-                <thead>
-                <tr>
-                    <th>
-                        <?php
-                        _e('Role', 'hide-product-prices-until-login'); ?>
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                foreach ($selected_roles as $role): ?>
-                    <tr data-role="<?php
-                    echo esc_attr($role); ?>">
-                        <td><?php
-                            echo esc_html($all_roles[$role]); ?></td>
-                        <td>
-                            <button type="button"
-                                    class="button remove-role-btn"><?php
-                                _e('Remove', 'hide-product-prices-until-login'); ?></button>
-                        </td>
-                    </tr>
-                <?php
-                endforeach; ?>
-                </tbody>
-            </table>
-        </div>
 
-        <input type="text" id="hpulr_save_trigger" style="display: none;"/>
-
-        <input type="hidden" name="hpulr_restricted_roles" id="hpulr_restricted_roles"
-               value="<?php
-               echo esc_attr(implode(',', $selected_roles)); ?>"/>
-        <?php
+        require_once HPULR_PLUGIN_PATH . 'templates/restricted-roles-table-template.php';
     }
 
     /**
@@ -224,42 +182,8 @@ class HPULR_Settings
         $all_roles      = HPULR_Settings::get_all_roles();
         $stored         = get_option('hpulr_restricted_roles', []);
         $selected_roles = is_array($stored) ? $stored : [];
-        ?>
-        <tr>
-            <th scope="row">
-                <?php
-                esc_html_e('Restricted Roles (Hide Prices)', 'hide-product-prices-until-login'); ?>
-            </th>
-            <td class="forminp forminp-text">
-                <p style="margin-bottom: 20px;">
-                    <select id="hpulr-role-select">
-                        <?php
-                        foreach ($all_roles as $key => $label): ?>
-                            <?php
-                            if (!in_array($key, $selected_roles)): ?>
-                                <option value="<?php
-                                echo esc_attr($key); ?>">
-                                    <?php
-                                    echo esc_html($label); ?>
-                                </option>
-                            <?php
-                            endif; ?>
-                        <?php
-                        endforeach; ?>
-                    </select>
-                    <button type="button" class="button" id="add-role-btn">
-                        <?php
-                        _e('Add Role', 'hide-product-prices-until-login'); ?>
-                    </button>
-                </p>
 
-                <p class="description">
-                    <?php
-                    esc_html_e('Select roles that should not see prices or Add to Cart.', 'hide-product-prices-until-login'); ?>
-                </p>
-            </td>
-        </tr>
-        <?php
+        require_once HPULR_PLUGIN_PATH . 'templates/selected-roles-fields-template.php';
     }
 
 
@@ -290,7 +214,7 @@ class HPULR_Settings
     public static function sanitize_restricted_roles($value, $option, $raw_value)
     {
         if ($option['id'] === 'hpulr_restricted_roles') {
-            $decoded = explode(',', wp_unslash($raw_value));
+            $decoded = array_filter(explode(',', wp_unslash($raw_value)));
 
             if (is_array($decoded)) {
                 return array_map('sanitize_text_field', $decoded);

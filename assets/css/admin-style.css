@@ -1,11 +1,16 @@
 #restricted-roles-table {
     border: 1px solid #ccd0d4;
     border-radius: 4px;
+    max-width: 600px;
 }
 
 #restricted-roles-table th,
 #restricted-roles-table td {
     padding: 8px 12px;
+}
+
+#restricted-roles-table td.action {
+    text-align: right;
 }
 
 .hpulr-roles-table-wrapper {

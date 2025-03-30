@@ -36,15 +36,22 @@ class HPULR_Assets
             'hpulr-admin-style',
             HPULR_PLUGIN_URL . 'assets/css/admin-style.css',
             [],
-            HPULR_VERSION
+            HPULR_VERSION . time()
         );
 
         wp_enqueue_script(
             'hpulr-admin-roles',
             HPULR_PLUGIN_URL . 'assets/js/admin-restricted-roles.js',
             ['jquery'],
-            HPULR_VERSION,
+            HPULR_VERSION . time(),
             true
+        );
+
+        wp_localize_script(
+            'hpulr-admin-roles',
+            'hpulr_i18n', [
+                'no-data' => __('No roles selected', 'hide-product-prices-until-login'),
+            ]
         );
     }
 
@@ -57,7 +64,7 @@ class HPULR_Assets
             'hpulr-style',
             HPULR_PLUGIN_URL . 'assets/css/style.css',
             [],
-            HPULR_VERSION
+            HPULR_VERSION . time()
         );
     }
 }
