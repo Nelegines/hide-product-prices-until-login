@@ -34,7 +34,7 @@ Hide WooCommerce product prices and Add to Cart buttons unless customers are log
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/hide-prices-until-login` directory or install through the WordPress plugin screen.
+1. Upload the plugin files to the `/wp-content/plugins/hide-product-prices-until-login` directory or install through the WordPress plugin screen.
 2. Activate the plugin through the "Plugins" menu.
 3. Go to **WooCommerce → Settings → Products → Hide Prices** to configure.
 
@@ -58,6 +58,9 @@ Yes. Enable “Test Mode” in the plugin settings to preview hidden prices whil
 - ✅ NEW: Hide prices based on user roles
 - ✅ NEW: Dynamic UI to manage restricted roles in admin
 - ✅ FIX: Ensures restricted roles are saved as an array
+- ✅ FIX: Proper handling of empty state in roles table (no-available-data)
+- ✅ FIX: JavaScript updates to restore placeholder row when roles removed
+- ✅ REFACTOR: Moved HTML render logic to template files for better maintainability
 - ✅ Tweak: Minor styling and JS enhancements for settings UI
 
 = 1.1.0 =
@@ -74,7 +77,7 @@ Yes. Enable “Test Mode” in the plugin settings to preview hidden prices whil
 == Upgrade Notice ==
 
 = 1.2.0 =
-Added support for user role-based restrictions and improved admin settings UX.
+Added support for user role-based restrictions, improved admin UI, and moved HTML rendering to template files for better extensibility.
 
 = 1.1.0 =
 Adds per-product messages, Add to Cart hiding, and admin test mode. Recommended upgrade for full WooCommerce compatibility and control.
