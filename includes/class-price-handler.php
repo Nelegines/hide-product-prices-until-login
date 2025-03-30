@@ -68,27 +68,41 @@ class HPULR_Price_Handler {
     }
 
     /**
-     * Determines whether the price should be hidden.
+     * Determine whether the product price should be hidden for the current user.
      *
-     * - Allows bypass for logged-in users (unless test mode is enabled).
-     * - Checks allowed countries via WooCommerce geolocation.
+     * This function checks:
+     * - If the admin has test mode enabled
+     * - If the logged-in user has a restricted role
+     * - If the user is from a disallowed country (based on geolocation)
+     * - If the user is not logged in and not from an allowed country
      *
-     * @return bool
+     * @return bool True if the price should be hidden, false otherwise.
      */
     private static function should_hide_price() {
-        // If admin and test mode enabled, simulate hiding
+        // Admin test mode
         if (current_user_can('manage_woocommerce') && get_option('hpulr_test_mode') === 'yes') {
             return true;
         }
 
-        // Skip if user is logged in
-        if (is_user_logged_in()) return false;
+        // Logged-in users bypass restriction by default
+        if (is_user_logged_in()) {
+            $restricted_roles = (array) get_option('hpulr_restricted_roles', []);
+            $user_roles = (array) wp_get_current_user()->roles;
 
-        // Get allowed countries from settings
+            // Intersect roles
+            if (!empty(array_intersect($restricted_roles, $user_roles))) {
+                return true;
+            }
+
+            return false;
+        }
+
+        // Check geolocation
         $allowed = array_map('trim', explode(',', get_option('hpulr_allowed_countries', '')));
-        $geo     = WC_Geolocation::geolocate_ip();
-        $country = $geo['country'] ?? '';
+        $geo = WC_Geolocation::geolocate_ip();
+        $country = isset($geo['country']) ? $geo['country'] : '';
 
-        return !in_array(strtoupper($country), array_map('strtoupper', $allowed));
+        return !in_array($country, $allowed);
     }
+
 }

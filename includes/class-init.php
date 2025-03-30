@@ -1,12 +1,15 @@
 <?php
+
 /**
  * Initializes the plugin by setting up hooks and loading settings.
  */
-class HPULR_Init {
+class HPULR_Init
+{
     private static $instance;
 
     // Singleton pattern to ensure only one instance
-    public static function get_instance() {
+    public static function get_instance()
+    {
         if (!isset(self::$instance)) {
             self::$instance = new self();
         }
@@ -14,7 +17,8 @@ class HPULR_Init {
     }
 
     // Private constructor sets up everything
-    private function __construct() {
+    private function __construct()
+    {
         // Load settings page in WP Admin
         if (is_admin()) {
             require_once HPULR_PLUGIN_PATH . 'admin/class-settings.php';

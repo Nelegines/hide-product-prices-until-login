@@ -1,0 +1,26 @@
+#restricted-roles-table {
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+}
+
+#restricted-roles-table th,
+#restricted-roles-table td {
+    padding: 8px 12px;
+}
+
+.hpulr-roles-table-wrapper {
+    overflow-x: auto;
+}
+
+.woocommerce-message {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
