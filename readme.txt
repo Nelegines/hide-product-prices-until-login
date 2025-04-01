@@ -14,6 +14,13 @@ Hide WooCommerce product prices and Add to Cart buttons unless customers are log
 
 **WooCommerce Hide Prices Until Login or Region** helps store owners control who can see prices and add products to their cart. Useful for wholesale stores, restricted content, or region-specific pricing policies.
 
+== Developer Features ==
+
+This plugin now supports integrations with premium extensions via a global override flag.
+
+- Set `$GLOBALS['hpulr_force_hide'] = true` before calling `HPULR_Price_Handler::filter_price()` to trigger the free plugin’s hidden price message
+- Useful for add-ons that apply custom conditions (like category-based price hiding)
+
 🎯 **Key Features:**
 - Hide prices for non-logged-in users
 - Disable Add to Cart for guests
@@ -62,6 +69,8 @@ Yes. Enable “Test Mode” in the plugin settings to preview hidden prices whil
 - ✅ FIX: JavaScript updates to restore placeholder row when roles removed
 - ✅ REFACTOR: Moved HTML render logic to template files for better maintainability
 - ✅ Tweak: Minor styling and JS enhancements for settings UI
+- ✅ NEW: Added support for external price hiding override via `$GLOBALS['hpulr_force_hide']`
+- ✅ NEW: This enables premium add-ons to trigger hidden price logic (e.g., for category-based restrictions)
 
 = 1.1.0 =
 - ✅ NEW: Per-product custom message override
