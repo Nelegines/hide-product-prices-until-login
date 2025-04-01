@@ -73,7 +73,7 @@ class HPULR_Settings
     public static function add_settings_fields($settings, $current_section)
     {
         if ($current_section === 'hpulr_hide_prices') {
-            return [
+            $settings_fields = [
                 [
                     'title' => __('Hide Prices Settings', 'hide-product-prices-until-login'),
                     'type'  => 'title',
@@ -119,6 +119,10 @@ class HPULR_Settings
                     'id'   => 'hpulr_hide_prices_end',
                 ],
             ];
+
+            // Apply the filter to allow premium add-ons to modify or add settings.
+            return apply_filters('hpulr_settings_fields', $settings_fields, $current_section);
+
         }
 
         return $settings;
