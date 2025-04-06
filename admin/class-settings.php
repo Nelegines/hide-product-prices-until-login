@@ -1,26 +1,33 @@
 <?php
 
 /**
- * Admin settings for WooCommerce Hide Prices plugin.
+ * Admin settings for WooCommerce Hide Prices plugin (Free Version).
+ * This class manages WooCommerce settings, product-level meta fields,
+ * and centralized saving for both free and premium settings.
  */
 class HPULR_Settings
 {
 
     /**
      * Initialize WooCommerce settings and product meta features.
+     * Hooks into WooCommerce to register the plugin's settings, fields,
+     * sanitization, and meta box saving.
      */
     public static function init()
     {
+        // Register section and fields under WooCommerce → Products
         add_filter('woocommerce_get_sections_products', [self::class, 'add_settings_section']);
         add_filter('woocommerce_get_settings_products', [self::class, 'add_settings_fields'], 10, 2);
 
-        // Register WooCommerce settings filters or renderers
+        // Register custom field renderers and sanitization
         add_action('woocommerce_admin_field_hpulr_roles_table', [self::class, 'hpulr_render_roles_table_setting']);
         add_action('woocommerce_admin_field_hpulr_restricted_roles', [self::class, 'render_hpulr_restricted_roles_field']);
-        add_filter('woocommerce_admin_settings_sanitize_option', [self::class, 'sanitize_restricted_roles'], 10, 3);
+        add_filter('woocommerce_admin_settings_sanitize_option', [self::class, 'sanitize_all_options'], 10, 3);
 
+        // ✅ Centralized saving for both free and premium settings
+        add_action('woocommerce_update_options_products', [self::class, 'save_combined_settings']);
 
-        // Add product-level meta box
+        // Register meta box for per-product custom message
         add_action('add_meta_boxes', function () {
             add_meta_box(
                 'hpulr_product_message',
@@ -31,11 +38,8 @@ class HPULR_Settings
             );
         });
 
-        // Save per-product meta field
+        // Save the custom message for individual products
         add_action('save_post', function ($post_id) {
-            /**
-             * Verify the nonce and save the field securely.
-             */
             if (!isset($_POST['hpulr_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['hpulr_nonce'])), 'hpulr_save_product_message')) {
                 return;
             }
@@ -52,10 +56,10 @@ class HPULR_Settings
     }
 
     /**
-     * Add a new section tab under WooCommerce → Products.
+     * Add a custom settings section tab under WooCommerce → Products.
      *
-     * @param array $sections
-     * @return array
+     * @param array $sections Existing WooCommerce sections.
+     * @return array Modified sections including Hide Prices.
      */
     public static function add_settings_section($sections)
     {
@@ -64,11 +68,11 @@ class HPULR_Settings
     }
 
     /**
-     * Add settings fields to the custom section.
+     * Define the settings fields shown in our custom section.
      *
-     * @param array $settings
-     * @param string $current_section
-     * @return array
+     * @param array $settings Existing settings.
+     * @param string $current_section Active section ID.
+     * @return array Fields to show under the "Hide Prices" section.
      */
     public static function add_settings_fields($settings, $current_section)
     {
@@ -106,12 +110,12 @@ class HPULR_Settings
                 [
                     'name' => __('Restricted Roles (Hide Prices)', 'hide-product-prices-until-login'),
                     'desc' => __('Select roles to restrict price visibility. Selected roles will appear below and be removed from the list.', 'hide-product-prices-until-login'),
-                    'type' => 'hpulr_restricted_roles', // custom field type
+                    'type' => 'hpulr_restricted_roles',
                     'id'   => 'hpulr_restricted_roles',
                 ],
                 [
                     'name' => __('Restricted Roles Table', 'hide-product-prices-until-login'),
-                    'type' => 'hpulr_roles_table', // Custom type hook
+                    'type' => 'hpulr_roles_table',
                     'id'   => 'hpulr_roles_table_placeholder',
                 ],
                 [
@@ -120,21 +124,47 @@ class HPULR_Settings
                 ],
             ];
 
-            // Apply the filter to allow premium add-ons to modify or add settings.
+            // 🔁 Allow premium extensions to inject more fields into this section
             return apply_filters('hpulr_settings_fields', $settings_fields, $current_section);
-
         }
 
         return $settings;
     }
 
     /**
-     * Retrieve all registered user roles in WordPress.
+     * Combine all settings from free and premium plugins.
      *
-     * This is used in the plugin settings to allow the admin
-     * to select which roles should have prices hidden from them.
+     * @return array Full settings array to be saved.
+     */
+    public static function get_combined_settings()
+    {
+        $base_settings = self::add_settings_fields([], 'hpulr_hide_prices');
+
+        // 🔁 Let premium inject additional settings
+        $premium_settings = apply_filters('hpulr_additional_settings', []);
+        if (!empty($premium_settings)) {
+            $filtered = array_filter($premium_settings, function ($field) {
+                return empty($field['type']) || ($field['type'] !== 'title' && $field['type'] !== 'sectionend');
+            });
+
+            $base_settings = array_merge($base_settings, $filtered);
+        }
+
+        return $base_settings;
+    }
+
+    /**
+     * Save all plugin settings (free + premium) in one centralized handler.
+     */
+    public static function save_combined_settings()
+    {
+        woocommerce_update_options(self::get_combined_settings());
+    }
+
+    /**
+     * Get all registered roles in WordPress.
      *
-     * @return array Associative array of role slugs => role names.
+     * @return array Role slugs => Role names.
      */
     public static function get_all_roles()
     {
@@ -149,25 +179,24 @@ class HPULR_Settings
     }
 
     /**
-     * Render the custom message input on the product edit screen.
+     * Render the per-product custom message input box.
      *
-     * @param WP_Post $post
+     * @param WP_Post $post The current post object.
      */
     public static function render_product_message_box($post)
     {
         $value = get_post_meta($post->ID, '_hpulr_custom_message', true);
         wp_nonce_field('hpulr_save_product_message', 'hpulr_nonce');
-
         require_once HPULR_PLUGIN_PATH . 'templates/product-edit-message-box-template.php';
     }
 
     /**
-     * Render the restricted roles table and hidden input.
-     * This is intended to be reused inside WooCommerce settings.
+     * Render the restricted roles table.
+     * This is reused inside the WooCommerce settings page.
      */
     public static function output_restricted_roles_table()
     {
-        $all_roles      = HPULR_Settings::get_all_roles();
+        $all_roles      = self::get_all_roles();
         $stored         = get_option('hpulr_restricted_roles', []);
         $selected_roles = is_array($stored) ? $stored : [];
 
@@ -175,59 +204,64 @@ class HPULR_Settings
     }
 
     /**
-     * Render the role selector field for WooCommerce settings.
-     * This field outputs a dropdown of available user roles and an "Add Role" button.
-     * The selected roles will be shown in a separate table rendered by another field.
+     * Render the custom dropdown + Add Role button in the settings page.
      *
-     * @param array $option The WooCommerce setting field config.
+     * @param array $option The setting field definition.
      */
     public static function render_hpulr_restricted_roles_field($option)
     {
-        $all_roles      = HPULR_Settings::get_all_roles();
+        $all_roles      = self::get_all_roles();
         $stored         = get_option('hpulr_restricted_roles', []);
         $selected_roles = is_array($stored) ? $stored : [];
 
         require_once HPULR_PLUGIN_PATH . 'templates/selected-roles-fields-template.php';
     }
 
-
     /**
-     * Render the roles table inside a WooCommerce form-table row.
+     * Render the roles table inside WooCommerce settings.
      *
      * @param array $field The field definition array.
      */
     public static function hpulr_render_roles_table_setting($field)
     {
-        echo '<tr class>';
+        echo '<tr>';
         echo '<th scope="row">' . esc_html($field['name']) . '</th>';
         echo '<td>';
-        HPULR_Settings::output_restricted_roles_table();
+        self::output_restricted_roles_table();
         echo '</td>';
         echo '</tr>';
     }
 
     /**
-     * Sanitize and save the restricted roles setting.
+     * Centralized sanitizer for both free and premium fields.
      *
-     * @param mixed $value The raw value submitted.
-     * @param array $option Option array from settings definition.
-     * @param string $raw_value The unsanitized value from $_POST.
-     *
+     * @param mixed $value The value being saved.
+     * @param array $option The option definition.
+     * @param mixed $raw_value The unsanitized input value.
      * @return mixed The sanitized value.
      */
-    public static function sanitize_restricted_roles($value, $option, $raw_value)
+    public static function sanitize_all_options($value, $option, $raw_value)
     {
-        if ($option['id'] === 'hpulr_restricted_roles') {
-            $decoded = array_filter(explode(',', wp_unslash($raw_value)));
+        $id = $option['id'];
 
-            if (is_array($decoded)) {
-                return array_map('sanitize_text_field', $decoded);
-            }
+        switch ($id) {
+            case 'hpulr_geo_category_countries':
+            case 'hpulr_restricted_roles':
+                $list = is_array($raw_value)
+                    ? $raw_value
+                    : explode(',', wp_unslash($raw_value));
+                return array_map('sanitize_text_field', array_filter($list));
 
-            return []; // fallback if decoding fails
+            case 'hpulr_geo_category_categories':
+                $list = is_array($raw_value)
+                    ? $raw_value
+                    : explode(',', wp_unslash($raw_value));
+                return array_map('absint', array_filter($list));
+
+            default:
+                return $value;
         }
-
-        return $value;
     }
+
 
 }

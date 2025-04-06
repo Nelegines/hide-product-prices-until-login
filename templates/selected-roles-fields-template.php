@@ -25,7 +25,6 @@
                 _e('Add Role', 'hide-product-prices-until-login'); ?>
             </button>
         </p>
-
         <p class="description">
             <?php
             esc_html_e('Select roles that should not see prices or Add to Cart.', 'hide-product-prices-until-login'); ?>

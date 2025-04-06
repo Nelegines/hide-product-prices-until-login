@@ -40,17 +40,18 @@ class HPULR_Assets
         );
 
         wp_enqueue_script(
-            'hpulr-admin-roles',
-            HPULR_PLUGIN_URL . 'assets/js/admin-restricted-roles.js',
+            'hpulr-admin-scripts',
+            HPULR_PLUGIN_URL . 'assets/js/admin-scripts.js',
             ['jquery'],
             HPULR_VERSION . time(),
             true
         );
 
         wp_localize_script(
-            'hpulr-admin-roles',
+            'hpulr-admin-scripts',
             'hpulr_i18n', [
-                'no-data' => __('No roles selected', 'hide-product-prices-until-login'),
+                'no-data'     => __('No items selected yet.', 'hide-product-prices-until-login'),
+                'save_notice' => __('Settings have changed, you should save them.', 'hide-product-prices-until-login'),
             ]
         );
     }
