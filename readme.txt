@@ -1,10 +1,10 @@
 === Hide Product Prices Until Login – for WooCommerce ===
 Contributors: nelegines
-Tags: woocommerce, hide prices, geolocation, login required, user roles
+Tags: woocommerce, hide prices, geolocation, login required, user roles, category based
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,10 +16,12 @@ Hide WooCommerce product prices and Add to Cart buttons unless customers are log
 
 == Developer Features ==
 
-This plugin now supports integrations with premium extensions via a global override flag.
+This plugin supports integrations with premium extensions via a global override flag and centralized architecture:
 
 - Set `$GLOBALS['hpulr_force_hide'] = true` before calling `HPULR_Price_Handler::filter_price()` to trigger the free plugin’s hidden price message
-- Useful for add-ons that apply custom conditions (like category-based price hiding)
+- Inject premium settings using `hpulr_additional_settings` filter
+- Automatically save premium and custom fields via centralized update hook
+- Sanitize both free and premium fields with centralized filter `sanitize_all_options`
 
 🎯 **Key Features:**
 - Hide prices for non-logged-in users
@@ -32,6 +34,8 @@ This plugin now supports integrations with premium extensions via a global overr
 - Per-product custom message override (Lite)
 - Test mode for admin previewing behavior
 - Supports all product types (simple, variable, etc.)
+- Centralized saving and sanitization (NEW in 1.2.1)
+- Compatible with premium add-ons (e.g., category-based hiding)
 
 == Screenshots ==
 
@@ -61,6 +65,14 @@ Yes. Enable “Test Mode” in the plugin settings to preview hidden prices whil
 
 == Changelog ==
 
+= 1.2.1 =
+- ✅ REFACTOR: Centralized settings saving and sanitization for both free and premium fields
+- ✅ NEW: Added filter `hpulr_additional_settings` to allow premium plugins to register their settings
+- ✅ NEW: Unified `sanitize_all_options` method for secure value handling
+- ✅ FIX: Prevented fatal error when sanitizing array-based inputs
+- ✅ REFACTOR: JavaScript update logic for role and category tables generalized
+- ✅ Tweak: Updated hidden field support for WooCommerce compatibility
+
 = 1.2.0 =
 - ✅ NEW: Hide prices based on user roles
 - ✅ NEW: Dynamic UI to manage restricted roles in admin
@@ -85,11 +97,11 @@ Yes. Enable “Test Mode” in the plugin settings to preview hidden prices whil
 
 == Upgrade Notice ==
 
+= 1.2.1 =
+Introduces centralized saving and sanitization for settings fields, allowing clean integration with premium extensions and avoiding potential saving bugs.
+
 = 1.2.0 =
 Added support for user role-based restrictions, improved admin UI, and moved HTML rendering to template files for better extensibility.
-
-= 1.1.0 =
-Adds per-product messages, Add to Cart hiding, and admin test mode. Recommended upgrade for full WooCommerce compatibility and control.
 
 == License ==
 

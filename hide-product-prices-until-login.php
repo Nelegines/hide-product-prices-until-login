@@ -4,7 +4,7 @@
  * Plugin URI: https://nelegines.com/plugins/hide-prices
  * Description: A plugin by Nelegines to hide WooCommerce product prices and disables purchasing unless the user is
  * logged in or from an allowed region.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Nelegines
  * Author URI: https://nelegines.com
  * License: GPLv2 or later
@@ -19,7 +19,7 @@ if (!defined('ABSPATH'))
 // Define constants
 define('HPULR_PLUGIN_PATH', plugin_dir_path(__FILE__)); // Filesystem path
 define('HPULR_PLUGIN_URL', plugin_dir_url(__FILE__));   // URL path
-define('HPULR_VERSION', '1.2.0');
+define('HPULR_VERSION', '1.2.1');
 
 // Autoloader for class files in includes/
 spl_autoload_register(function ($class) {
