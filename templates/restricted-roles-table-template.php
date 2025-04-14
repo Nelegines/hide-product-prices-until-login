@@ -1,10 +1,15 @@
+<?php
+if (!defined('ABSPATH'))
+    exit;
+?>
+
 <div class="hpulr-roles-table-wrapper">
     <table class="widefat striped" id="restricted-roles-table">
         <thead>
         <tr>
             <th>
                 <?php
-                _e('Role', 'hide-product-prices-until-login'); ?>
+                esc_html_e('Role', 'hide-product-prices-until-login-for-woocommerce'); ?>
             </th>
             <th></th>
         </tr>
@@ -20,7 +25,7 @@
                     <td class="action">
                         <button type="button"
                                 class="button remove-role-btn"><?php
-                            _e('Remove', 'hide-product-prices-until-login'); ?></button>
+                            esc_html_e('Remove', 'hide-product-prices-until-login-for-woocommerce'); ?></button>
                     </td>
                 </tr>
             <?php
@@ -28,7 +33,7 @@
         else: ?>
             <tr class="no-data-available">
                 <td colspan="2" style="text-align: center;"><?php
-                    _e('No roles selected', 'hide-product-prices-until-login') ?></td>
+                    esc_html_e('No roles selected', 'hide-product-prices-until-login-for-woocommerce') ?></td>
             </tr>
         <?php
         endif;

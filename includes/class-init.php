@@ -1,4 +1,8 @@
 <?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 /**
  * Initializes the plugin by setting up hooks and loading settings.

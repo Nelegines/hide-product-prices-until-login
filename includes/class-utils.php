@@ -1,9 +1,15 @@
 <?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * Utility helper functions for the plugin.
  * You can use this class for reusable static methods across the plugin.
  */
-class HPULR_Utils {
+class HPULR_Utils
+{
 
     /**
      * Convert a comma-separated string to an array of trimmed values.
@@ -11,7 +17,8 @@ class HPULR_Utils {
      * @param string $input
      * @return array
      */
-    public static function csv_to_array($input) {
+    public static function csv_to_array($input)
+    {
         return array_map('trim', explode(',', $input));
     }
 
@@ -21,7 +28,8 @@ class HPULR_Utils {
      * @param string $code
      * @return string
      */
-    public static function sanitize_country_code($code) {
+    public static function sanitize_country_code($code)
+    {
         return strtoupper(sanitize_text_field($code));
     }
 
@@ -32,7 +40,8 @@ class HPULR_Utils {
      * @param string $haystack
      * @return bool
      */
-    public static function in_csv($needle, $haystack) {
+    public static function in_csv($needle, $haystack)
+    {
         $array = self::csv_to_array($haystack);
         return in_array($needle, $array);
     }

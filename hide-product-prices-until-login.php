@@ -1,25 +1,30 @@
 <?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * Plugin Name: Hide Product Prices Until Login – for WooCommerce
  * Plugin URI: https://nelegines.com/plugins/hide-prices
- * Description: A plugin by Nelegines to hide WooCommerce product prices and disables purchasing unless the user is
- * logged in or from an allowed region.
- * Version: 1.2.1
+ * Description: A plugin by Nelegines to hide WooCommerce product prices and disable purchasing unless the user is logged in or from an allowed region.
+ * Version: 1.2.2
  * Author: Nelegines
  * Author URI: https://nelegines.com
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: hide-product-prices-until-login
+ * Text Domain: hide-product-prices-until-login-for-woocommerce
  * Domain Path: /languages
+ * Requires Plugins: woocommerce
+ * Requires at least: 5.8
+ * Tested up to: 6.7
+ * Requires PHP: 7.4
  */
-
-if (!defined('ABSPATH'))
-    exit;                                               // Prevent direct access
 
 // Define constants
 define('HPULR_PLUGIN_PATH', plugin_dir_path(__FILE__)); // Filesystem path
 define('HPULR_PLUGIN_URL', plugin_dir_url(__FILE__));   // URL path
-define('HPULR_VERSION', '1.2.1');
+define('HPULR_VERSION', '1.2.2');
 
 // Autoloader for class files in includes/
 spl_autoload_register(function ($class) {

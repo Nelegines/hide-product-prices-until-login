@@ -1,7 +1,12 @@
+<?php
+if (!defined('ABSPATH'))
+    exit;
+?>
+
 <tr>
     <th scope="row">
         <?php
-        esc_html_e('Restricted Roles (Hide Prices)', 'hide-product-prices-until-login'); ?>
+        esc_html_e('Restricted Roles (Hide Prices)', 'hide-product-prices-until-login-for-woocommerce'); ?>
     </th>
     <td class="forminp forminp-text">
         <p style="margin-bottom: 20px;">
@@ -22,12 +27,12 @@
             </select>
             <button type="button" class="button" id="add-role-btn">
                 <?php
-                _e('Add Role', 'hide-product-prices-until-login'); ?>
+                esc_html_e('Add Role', 'hide-product-prices-until-login-for-woocommerce'); ?>
             </button>
         </p>
         <p class="description">
             <?php
-            esc_html_e('Select roles that should not see prices or Add to Cart.', 'hide-product-prices-until-login'); ?>
+            esc_html_e('Select roles that should not see prices or Add to Cart.', 'hide-product-prices-until-login-for-woocommerce'); ?>
         </p>
     </td>
 </tr>

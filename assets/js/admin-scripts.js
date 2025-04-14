@@ -53,10 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // === PREMIUM: Handle Geo-Restricted Categories ===
-    const categorySelect = document.getElementById('hpulr-geo-category-select');
-    const categoryTable = document.querySelector('#restricted-geo-categories-table tbody');
-    const addCategoryBtn = document.getElementById('add-geo-category-btn');
-    const hiddenCategoryInput = document.getElementById('hpulr_geo_category_categories');
+    const categorySelect = document.getElementById('hpulr-category-select');
+    const categoryTable = document.querySelector('#restricted-categories-table tbody');
+    const addCategoryBtn = document.getElementById('add-category-btn');
+    const hiddenCategoryInput = document.getElementById('hpulr_hidden_categories');
 
     if (categorySelect && categoryTable && addCategoryBtn && hiddenCategoryInput) {
 
@@ -64,28 +64,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const value = categorySelect.value;
             const label = categorySelect.options[categorySelect.selectedIndex]?.text;
 
-            console.log('Im clicked..');
-            console.log('Selected category:', value);
-
             if (!value) return;
 
             jQuery('#restricted-geo-categories-table tr.no-available-data').remove();
 
             const row = document.createElement('tr');
 
-            row.setAttribute('data-geo-categories', value);
-            row.innerHTML = `<td>${label}</td><td class="action"><button type="button" class="button remove-geo-categories-button">Remove</button></td>`;
+            row.setAttribute('data-categories', value);
+            row.innerHTML = `<td>${label}</td><td class="action"><button type="button" class="button remove-categories-button">Remove</button></td>`;
             categoryTable.appendChild(row);
             categorySelect.querySelector(`option[value="${value}"]`)?.remove();
 
-            updateHiddenInput(categoryTable, 'data-geo-categories', hiddenCategoryInput);
+            updateHiddenInput(categoryTable, 'data-categories', hiddenCategoryInput);
             updateEmptyStateRow(categoryTable, noCategoryDataText);
         });
 
         categoryTable.addEventListener('click', (e) => {
-            if (!e.target.classList.contains('remove-geo-categories-button')) return;
+            if (!e.target.classList.contains('remove-categories-button')) return;
             const row = e.target.closest('tr');
-            const value = row.getAttribute('data-geo-categories');
+            const value = row.getAttribute('data-categories');
             const label = row.querySelector('td')?.textContent;
 
             if (value && label) {
@@ -96,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             row.remove();
-            updateHiddenInput(categoryTable, 'data-geo-categories', hiddenCategoryInput);
+            updateHiddenInput(categoryTable, 'data-categories', hiddenCategoryInput);
             updateEmptyStateRow(categoryTable, noCategoryDataText);
         });
     }

@@ -1,4 +1,8 @@
 <?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 /**
  * Handles plugin asset loading (CSS, JS).
@@ -50,8 +54,8 @@ class HPULR_Assets
         wp_localize_script(
             'hpulr-admin-scripts',
             'hpulr_i18n', [
-                'no-data'     => __('No items selected yet.', 'hide-product-prices-until-login'),
-                'save_notice' => __('Settings have changed, you should save them.', 'hide-product-prices-until-login'),
+                'no-data'     => __('No items selected yet.', 'hide-product-prices-until-login-for-woocommerce'),
+                'save_notice' => __('Settings have changed, you should save them.', 'hide-product-prices-until-login-for-woocommerce'),
             ]
         );
     }

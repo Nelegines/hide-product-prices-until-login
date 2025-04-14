@@ -1,4 +1,8 @@
 <?php
+// Exit if accessed directly.
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 /**
  * Admin settings for WooCommerce Hide Prices plugin (Free Version).
@@ -31,7 +35,7 @@ class HPULR_Settings
         add_action('add_meta_boxes', function () {
             add_meta_box(
                 'hpulr_product_message',
-                __('Hide Price Message (Optional)', 'hide-product-prices-until-login'),
+                __('Hide Price Message (Optional)', 'hide-product-prices-until-login-for-woocommerce'),
                 [self::class, 'render_product_message_box'],
                 'product',
                 'side'
@@ -63,7 +67,7 @@ class HPULR_Settings
      */
     public static function add_settings_section($sections)
     {
-        $sections['hpulr_hide_prices'] = __('Hide Prices', 'hide-product-prices-until-login');
+        $sections['hpulr_hide_prices'] = __('Hide Prices', 'hide-product-prices-until-login-for-woocommerce');
         return $sections;
     }
 
@@ -79,42 +83,42 @@ class HPULR_Settings
         if ($current_section === 'hpulr_hide_prices') {
             $settings_fields = [
                 [
-                    'title' => __('Hide Prices Settings', 'hide-product-prices-until-login'),
+                    'title' => __('Hide Prices Settings', 'hide-product-prices-until-login-for-woocommerce'),
                     'type'  => 'title',
-                    'desc'  => __('Configure rules for hiding prices and disabling Add to Cart.', 'hide-product-prices-until-login'),
+                    'desc'  => __('Configure rules for hiding prices and disabling Add to Cart.', 'hide-product-prices-until-login-for-woocommerce'),
                     'id'    => 'hpulr_hide_prices_title',
                 ],
                 [
-                    'title'   => __('Enable Test Mode', 'hide-product-prices-until-login'),
-                    'desc'    => __('Force-hide prices even for logged-in admins (for testing).', 'hide-product-prices-until-login'),
+                    'title'   => __('Enable Test Mode', 'hide-product-prices-until-login-for-woocommerce'),
+                    'desc'    => __('Force-hide prices even for logged-in admins (for testing).', 'hide-product-prices-until-login-for-woocommerce'),
                     'id'      => 'hpulr_test_mode',
                     'default' => 'no',
                     'type'    => 'checkbox',
                 ],
                 [
-                    'title'    => __('Allowed Countries', 'hide-product-prices-until-login'),
-                    'desc'     => __('Comma-separated ISO country codes (e.g., US,CA,AU)', 'hide-product-prices-until-login'),
+                    'title'    => __('Allowed Countries', 'hide-product-prices-until-login-for-woocommerce'),
+                    'desc'     => __('Comma-separated ISO country codes (e.g., US,CA,AU)', 'hide-product-prices-until-login-for-woocommerce'),
                     'id'       => 'hpulr_allowed_countries',
                     'default'  => '',
                     'type'     => 'text',
                     'desc_tip' => true,
                 ],
                 [
-                    'title'    => __('Hidden Price Message', 'hide-product-prices-until-login'),
-                    'desc'     => __('Shown when prices are hidden. Supports {login_url}', 'hide-product-prices-until-login'),
+                    'title'    => __('Hidden Price Message', 'hide-product-prices-until-login-for-woocommerce'),
+                    'desc'     => __('Shown when prices are hidden. Supports {login_url}', 'hide-product-prices-until-login-for-woocommerce'),
                     'id'       => 'hpulr_hidden_price_message',
                     'default'  => 'Login to view price',
                     'type'     => 'text',
                     'desc_tip' => true,
                 ],
                 [
-                    'name' => __('Restricted Roles (Hide Prices)', 'hide-product-prices-until-login'),
-                    'desc' => __('Select roles to restrict price visibility. Selected roles will appear below and be removed from the list.', 'hide-product-prices-until-login'),
+                    'name' => __('Restricted Roles (Hide Prices)', 'hide-product-prices-until-login-for-woocommerce'),
+                    'desc' => __('Select roles to restrict price visibility. Selected roles will appear below and be removed from the list.', 'hide-product-prices-until-login-for-woocommerce'),
                     'type' => 'hpulr_restricted_roles',
                     'id'   => 'hpulr_restricted_roles',
                 ],
                 [
-                    'name' => __('Restricted Roles Table', 'hide-product-prices-until-login'),
+                    'name' => __('Restricted Roles Table', 'hide-product-prices-until-login-for-woocommerce'),
                     'type' => 'hpulr_roles_table',
                     'id'   => 'hpulr_roles_table_placeholder',
                 ],
@@ -252,7 +256,7 @@ class HPULR_Settings
                     : explode(',', wp_unslash($raw_value));
                 return array_map('sanitize_text_field', array_filter($list));
 
-            case 'hpulr_geo_category_categories':
+            case 'hpulr_hidden_categories':
                 $list = is_array($raw_value)
                     ? $raw_value
                     : explode(',', wp_unslash($raw_value));

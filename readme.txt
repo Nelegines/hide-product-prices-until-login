@@ -4,7 +4,7 @@ Tags: woocommerce, hide prices, geolocation, login required, user roles, categor
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,6 +96,9 @@ Yes. Enable “Test Mode” in the plugin settings to preview hidden prices whil
 - Initial release with price hiding and region-based logic
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+Added ABSPATH protection to all PHP files to prevent direct access.
 
 = 1.2.1 =
 Introduces centralized saving and sanitization for settings fields, allowing clean integration with premium extensions and avoiding potential saving bugs.
